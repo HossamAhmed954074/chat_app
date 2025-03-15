@@ -1,9 +1,8 @@
-import 'package:chat_app/constraints/my_colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomBubbleChatPost extends StatelessWidget {
-  CustomBubbleChatPost({required this.masseage, super.key});
-  String masseage;
+ const CustomBubbleChatPost({required this.masseage, super.key});
+  final String masseage;
   @override
   Widget build(BuildContext context) {
     return Align(

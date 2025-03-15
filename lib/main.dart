@@ -1,16 +1,19 @@
-import 'package:chat_app/constraints/strings.dart';
-import 'package:chat_app/firebase_options.dart';
-import 'package:chat_app/presentation/screens/chat_screen.dart';
-import 'package:chat_app/presentation/screens/log_in_screen.dart';
-import 'package:chat_app/presentation/screens/register_screen.dart';
-import 'package:chat_app/routs_app.dart';
+import 'package:chat_app/cubits/is_scure_cubit/cubit/is_scure_cubit.dart';
+import 'package:chat_app/cubits/login_cubit/cubit/log_in_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'constraints/strings.dart';
+import 'firebase_options.dart';
+import 'presentation/screens/chat_screen.dart';
+import 'presentation/screens/log_in_screen.dart';
+import 'presentation/screens/register_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(const ChatApp());
+  runApp(BlocProvider(create: (context) => IsScureCubit(), child: ChatApp()));
 }
 
 class ChatApp extends StatelessWidget {
@@ -18,15 +21,17 @@ class ChatApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      routes: {
-        logInScreen :  (context) => LogInScreen(),
-        registerScreen: (context) => RegisterScreen(),
-        chatScreen: (context) => ChatScreen(),
-        
-      },
-      initialRoute: logInScreen,
+    return BlocProvider(
+      create: (context) => LogInCubit(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        routes: {
+          logInScreen: (context) => LogInScreen(),
+          registerScreen: (context) => RegisterScreen(),
+          chatScreen: (context) => ChatScreen(),
+        },
+        initialRoute: logInScreen,
+      ),
     );
   }
 }

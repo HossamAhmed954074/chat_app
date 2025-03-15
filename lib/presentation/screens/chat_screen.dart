@@ -1,9 +1,9 @@
 import 'dart:developer';
-import 'package:chat_app/constraints/my_colors.dart';
-import 'package:chat_app/constraints/strings.dart';
-import 'package:chat_app/data/models/message_model.dart';
-import 'package:chat_app/presentation/widgets/custom_bubble_chat_get.dart';
-import 'package:chat_app/presentation/widgets/custom_bubble_chat_post.dart';
+import '../../constraints/my_colors.dart';
+import '../../constraints/strings.dart';
+import '../../data/models/message_model.dart';
+import '../widgets/custom_bubble_chat_get.dart';
+import '../widgets/custom_bubble_chat_post.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 

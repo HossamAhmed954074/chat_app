@@ -1,4 +1,4 @@
-import 'package:chat_app/constraints/strings.dart';
+import '../../constraints/strings.dart';
 
 class MessageModel {
   final String message;

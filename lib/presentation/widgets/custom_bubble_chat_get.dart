@@ -1,4 +1,4 @@
-import 'package:chat_app/constraints/my_colors.dart';
+import '../../constraints/my_colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomBubbleChatGet extends StatelessWidget {

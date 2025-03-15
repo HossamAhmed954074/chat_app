@@ -1,9 +1,9 @@
-import 'package:chat_app/constraints/my_colors.dart';
-import 'package:chat_app/constraints/strings.dart';
-import 'package:chat_app/helper/register_user_auth.dart';
-import 'package:chat_app/helper/show_snack_bar.dart';
-import 'package:chat_app/presentation/widgets/custom_button.dart';
-import 'package:chat_app/presentation/widgets/custom_text_field.dart';
+import '../../constraints/my_colors.dart';
+import '../../constraints/strings.dart';
+import '../../helper/register_user_auth.dart';
+import '../../helper/show_snack_bar.dart';
+import '../widgets/custom_button.dart';
+import '../widgets/custom_text_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
