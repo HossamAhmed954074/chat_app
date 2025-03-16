@@ -1,5 +1,6 @@
+import 'package:chat_app/cubits/cubit/auth_cubit.dart';
+
 import '../../cubits/is_scure_cubit/cubit/is_scure_cubit.dart';
-import '../../cubits/register_cubit/cubit/register_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../constraints/my_colors.dart';
@@ -12,14 +13,17 @@ import '../widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
+// ignore: must_be_immutable
 class RegisterScreen extends StatelessWidget {
   String? email, password;
   bool isAsyncCall = false;
   GlobalKey<FormState> formKey = GlobalKey();
 
+  RegisterScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<RegisterCubit, RegisterState>(
+    return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is RegisterLoading) {
           isAsyncCall = true;
@@ -106,7 +110,7 @@ class RegisterScreen extends StatelessWidget {
                       buttonText: 'Register',
                       onPressed: () async {
                         if (formKey.currentState!.validate()) {
-                          BlocProvider.of<RegisterCubit>(
+                          BlocProvider.of<AuthCubit>(
                             context,
                           ).registerUser(email, password);
                         }

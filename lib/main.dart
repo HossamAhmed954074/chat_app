@@ -1,7 +1,8 @@
+import 'package:chat_app/cubits/cubit/auth_cubit.dart';
+
 import 'cubits/chat_cubit/cubit/chat_cubit.dart';
 import 'cubits/is_scure_cubit/cubit/is_scure_cubit.dart';
-import 'cubits/login_cubit/cubit/log_in_cubit.dart';
-import 'cubits/register_cubit/cubit/register_cubit.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'constraints/strings.dart';
@@ -25,6 +26,7 @@ class ChatApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (context) => AuthCubit(),),
          BlocProvider(create: (context) => IsScureCubit(),),
          BlocProvider(create: (context) => ChatCubit(),),
       ],
@@ -32,15 +34,9 @@ class ChatApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         routes: {
           logInScreen:
-              (context) => BlocProvider(
-                create: (context) => LogInCubit(),
-                child: LogInScreen(),
-              ),
+              (context) => LogInScreen(),
           registerScreen:
-              (context) => BlocProvider(
-                create: (context) => RegisterCubit(),
-                child: RegisterScreen(),
-              ),
+              (context) => RegisterScreen(),
           chatScreen:
               (context) => ChatScreen(),
         },
