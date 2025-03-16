@@ -1,6 +1,6 @@
-import 'package:chat_app/cubits/chat_cubit/cubit/chat_cubit.dart';
-import 'package:chat_app/cubits/is_scure_cubit/cubit/is_scure_cubit.dart';
-import 'package:chat_app/cubits/login_cubit/cubit/log_in_cubit.dart';
+import '../../cubits/chat_cubit/cubit/chat_cubit.dart';
+import '../../cubits/is_scure_cubit/cubit/is_scure_cubit.dart';
+import '../../cubits/login_cubit/cubit/log_in_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../constraints/my_colors.dart';

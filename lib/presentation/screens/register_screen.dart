@@ -1,5 +1,5 @@
-import 'package:chat_app/cubits/is_scure_cubit/cubit/is_scure_cubit.dart';
-import 'package:chat_app/cubits/register_cubit/cubit/register_cubit.dart';
+import '../../cubits/is_scure_cubit/cubit/is_scure_cubit.dart';
+import '../../cubits/register_cubit/cubit/register_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../constraints/my_colors.dart';
