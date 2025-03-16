@@ -1,3 +1,4 @@
+import 'package:chat_app/cubits/chat_cubit/cubit/chat_cubit.dart';
 import 'package:chat_app/cubits/is_scure_cubit/cubit/is_scure_cubit.dart';
 import 'package:chat_app/cubits/login_cubit/cubit/log_in_cubit.dart';
 import 'package:chat_app/cubits/register_cubit/cubit/register_cubit.dart';
@@ -22,8 +23,11 @@ class ChatApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => IsScureCubit(),
+    return MultiBlocProvider(
+      providers: [
+         BlocProvider(create: (context) => IsScureCubit(),),
+         BlocProvider(create: (context) => ChatCubit(),),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         routes: {
@@ -37,7 +41,8 @@ class ChatApp extends StatelessWidget {
                 create: (context) => RegisterCubit(),
                 child: RegisterScreen(),
               ),
-          chatScreen: (context) => ChatScreen(),
+          chatScreen:
+              (context) => ChatScreen(),
         },
         initialRoute: logInScreen,
       ),

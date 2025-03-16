@@ -1,71 +1,38 @@
 import 'dart:developer';
+
+import 'package:chat_app/cubits/chat_cubit/cubit/chat_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../constraints/my_colors.dart';
 import '../../constraints/strings.dart';
-import '../../data/models/message_model.dart';
 import '../widgets/custom_bubble_chat_get.dart';
 import '../widgets/custom_bubble_chat_post.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 // ignore: must_be_immutable
 class ChatScreen extends StatelessWidget {
   ChatScreen({super.key});
- 
-  CollectionReference messages = FirebaseFirestore.instance.collection(
-    KMessage,
-  );
+
   TextEditingController controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    var emailadress = ModalRoute.of(context)!.settings.arguments;
-    log(ModalRoute.of(context)!.settings.arguments.toString());
-    return StreamBuilder<QuerySnapshot>(
-      stream: messages.orderBy(KcreatedAt, descending: true).snapshots(),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Text("Something went wrong");
-        } else if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
-          //  Map<String, dynamic> data = snapshot.data?.docs as Map<String, dynamic> ;
-          List<MessageModel> messageList = [];
-          for (int i = 0; i < snapshot.data!.docs.length; i++) {
-            messageList.add(MessageModel.fromJson(snapshot.data!.docs[i]));
-          }
-          return ChatsListViewBuilder(
-            chats: messageList,
-            controller: controller,
-            messages: messages,
-            email: emailadress,
-          );
-        } else {
-          return ChatsListViewBuilder(
-            chats: [MessageModel('Not Have A Message', "emailadress")],
-            controller: controller,
-            messages: messages,
-            email: emailadress,
-          );
-        }
-      },
-    );
+    return ChatsListViewBuilder(controller: controller);
   }
 }
 
 // ignore: must_be_immutable
 class ChatsListViewBuilder extends StatelessWidget {
-  ChatsListViewBuilder({
-    super.key,
-    required this.controller,
-    required this.messages,
-    required this.chats,
-    required this.email,
-  });
-  final List<MessageModel> chats;
+  ChatsListViewBuilder({super.key, required this.controller});
   final TextEditingController controller;
-  final CollectionReference<Object?> messages;
+  // final CollectionReference<Object?> messages;
   final _controller = ScrollController();
   var email;
 
   @override
   Widget build(BuildContext context) {
+    email = ModalRoute.of(context)!.settings.arguments;
+    log(email.toString());
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
@@ -84,23 +51,32 @@ class ChatsListViewBuilder extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            child: ListView.builder(
-              reverse: true,
-              controller: _controller,
-              physics: BouncingScrollPhysics(),
-              itemCount: chats.length,
-              itemBuilder:
-                  (context, index) =>
-                      email == chats[index].id
-                          ? CustomBubbleChatGet(masseage: chats[index].message)
-                          : CustomBubbleChatPost(
-                            masseage: chats[index].message,
-                          ),
+            child: BlocBuilder<ChatCubit, ChatState>(
+             
+              builder: (context, state) {
+
+                var chats = BlocProvider.of<ChatCubit>(context).list;
+                return ListView.builder(
+                  reverse: true,
+                  controller: _controller,
+                  physics: BouncingScrollPhysics(),
+                  itemCount: chats.length,
+                  itemBuilder:
+                      (context, index) =>
+                          email == chats[index].id
+                              ? CustomBubbleChatGet(
+                                masseage: chats[index].message,
+                              )
+                              : CustomBubbleChatPost(
+                                masseage: chats[index].message,
+                              ),
+                );
+              },
             ),
           ),
           SendMasseageTextFaildCustomWidget(
             controller: controller,
-            messages: messages,
+            // messages: messages,
             scrollController: _controller,
             email: email,
           ),
@@ -115,15 +91,14 @@ class SendMasseageTextFaildCustomWidget extends StatelessWidget {
   SendMasseageTextFaildCustomWidget({
     super.key,
     required this.controller,
-    required this.messages,
     required this.scrollController,
     required this.email,
   });
   final ScrollController scrollController;
   final TextEditingController controller;
-  final CollectionReference<Object?> messages;
+  // final CollectionReference<Object?> messages;
   var email;
-  var textt;
+  String? message;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -131,25 +106,17 @@ class SendMasseageTextFaildCustomWidget extends StatelessWidget {
       child: TextFormField(
         controller: controller,
         onChanged: (value) {
-          textt = value;
-          // messages.add({KMessage: value, KcreatedAt: DateTime.now()});
-          // controller.clear();
-          // scrollController.animateTo(
-          //   0,
-          //   duration: Duration(milliseconds: 200),
-          //   curve: Curves.fastOutSlowIn,
-          // );
+          message = value;
         },
         decoration: InputDecoration(
           hintText: 'Send Massege',
           suffixIcon: IconButton(
             onPressed: () {
-              if (textt != null) {
-                messages.add({
-                  KMessage: textt,
-                  KcreatedAt: DateTime.now(),
-                  'Id': email,
-                });
+              if (message != null) {
+                BlocProvider.of<ChatCubit>(
+                  context,
+                ).sendMessage(message: message!, email: email);
+                //todo add masseage
                 controller.clear();
                 scrollController.animateTo(
                   0,
