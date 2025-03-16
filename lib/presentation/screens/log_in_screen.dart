@@ -124,7 +124,7 @@ class LogInScreen extends StatelessWidget {
 
                           InkWell(
                             onTap:
-                                () => Navigator.pushReplacementNamed(
+                                () => Navigator.pushNamed(
                                   context,
                                   registerScreen,
                                 ),
