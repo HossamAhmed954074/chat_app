@@ -1,4 +1,5 @@
-import 'package:chat_app/cubits/cubit/auth_cubit.dart';
+
+import 'package:chat_app/bloc/bloc/auth_bloc.dart';
 
 import '../../cubits/is_scure_cubit/cubit/is_scure_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,7 +24,7 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthCubit, AuthState>(
+    return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is RegisterLoading) {
           isAsyncCall = true;
@@ -110,9 +111,9 @@ class RegisterScreen extends StatelessWidget {
                       buttonText: 'Register',
                       onPressed: () async {
                         if (formKey.currentState!.validate()) {
-                          BlocProvider.of<AuthCubit>(
+                          BlocProvider.of<AuthBloc>(
                             context,
-                          ).registerUser(email, password);
+                          ).add(RegisterUser(email: email, password: password));
                         }
                       },
                     ),

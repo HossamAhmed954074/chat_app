@@ -1,4 +1,4 @@
-import 'package:chat_app/cubits/cubit/auth_cubit.dart';
+import 'package:chat_app/bloc/bloc/auth_bloc.dart';
 
 import 'cubits/chat_cubit/cubit/chat_cubit.dart';
 import 'cubits/is_scure_cubit/cubit/is_scure_cubit.dart';
@@ -26,7 +26,7 @@ class ChatApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => AuthCubit(),),
+        BlocProvider(create: (context) => AuthBloc(),),
          BlocProvider(create: (context) => IsScureCubit(),),
          BlocProvider(create: (context) => ChatCubit(),),
       ],

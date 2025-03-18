@@ -1,4 +1,4 @@
-import 'package:chat_app/cubits/cubit/auth_cubit.dart';
+import 'package:chat_app/bloc/bloc/auth_bloc.dart';
 
 import '../../cubits/chat_cubit/cubit/chat_cubit.dart';
 import '../../cubits/is_scure_cubit/cubit/is_scure_cubit.dart';
@@ -22,7 +22,7 @@ class LogInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthCubit, AuthState>(
+    return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is LogInLoading) {
           isAsyncCall = true;
@@ -109,10 +109,9 @@ class LogInScreen extends StatelessWidget {
                         buttonText: 'Log In',
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
-                            BlocProvider.of<AuthCubit>(
+                            BlocProvider.of<AuthBloc>(
                               context,
-                            ).logInUser(email, password);
-                            //Navigator.pushNamed(context, 'chatScreen',arguments: email);
+                            ).add(LogInUser(email: email, password: password));
                           } else {}
                         },
                       ),
