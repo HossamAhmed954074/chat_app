@@ -27,6 +27,7 @@ class ChatsListViewBuilder extends StatelessWidget {
   final TextEditingController controller;
   // final CollectionReference<Object?> messages;
   final _controller = ScrollController();
+  // ignore: prefer_typing_uninitialized_variables
   var email;
 
   @override
@@ -97,6 +98,7 @@ class SendMasseageTextFaildCustomWidget extends StatelessWidget {
   final ScrollController scrollController;
   final TextEditingController controller;
   // final CollectionReference<Object?> messages;
+  // ignore: prefer_typing_uninitialized_variables
   var email;
   String? message;
   @override

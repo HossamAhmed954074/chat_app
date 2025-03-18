@@ -1,6 +1,7 @@
 import '../../constraints/my_colors.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CustomBubbleChatGet extends StatelessWidget {
   CustomBubbleChatGet({required this.masseage, super.key});
   String masseage;
